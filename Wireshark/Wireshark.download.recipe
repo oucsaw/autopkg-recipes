@@ -1,0 +1,71 @@
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Download Wireshark - either the Stable or Development release.</string>
+    <key>Identifier</key>
+    <string>com.github.ouscaw.autokpg.Wireshark.download</string>
+    <key>Input</key>
+    <dict>
+            <key>NAME</key>
+            <string>Wireshark</string>
+            <key>RELEASE</key>
+            <string>Stable</string>
+            <key>ARCH</key>
+            <string>Intel 64</string>
+    </dict>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+            <key>Arguments</key>
+            <dict>
+                <key>url</key>
+                <string>https://www.wireshark.org/download.html</string>
+                <key>re_pattern</key>
+<!--  Full regular expression (with extra line breaks is:
+
+     >\s*%RELEASE% Release\s*\(
+         (?P<version>[^)]+)
+                             \)
+     .*<.*href="
+        (?P<url>https://.*/(?P<filename>%NAME% (?P=version) %ARCH%.dmg))
+      ">OS X
+
+This should capture:
+   * version (the verison for the release)
+   * URL the URL to download from (including the version above, and chosen arch)
+   * The filename based on the last part of the URL
+
+I'm using <![CDATA[ ... ]]> to avoid having to quote the angled brackets
+
+-->
+                <string><![CDATA[>\s*%RELEASE% Release\s*\((?P<version>[^)]+)\).*<.*href="(?P<url>https://.*/(?P<filename>%NAME% (?P=version) %ARCH%.dmg))">OS X]]></string>
+                <key>re_flags</key>
+                <array>
+                    <string>MULTILINE</string>
+                    <string>DOTALL</string>
+                </array>
+                <key>result_output_var_name</key>
+                <string>match</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
+            <key>Arguments</key>
+            <dict>
+                <key>url</key>
+                <string>%url%</string>
+                <key>filename</key>
+                <string>%filename%</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>EndOfCheckPhase</string>
+        </dict>
+    </array>
+</dict>
+</plist>
