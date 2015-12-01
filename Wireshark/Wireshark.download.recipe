@@ -2,7 +2,7 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Download Wireshark - either the Stable or Development release.</string>
+    <string>Download Wireshark using a nominated release.</string>
     <key>Identifier</key>
     <string>com.github.ouscaw.autokpg.Wireshark.download</string>
     <key>Input</key>
