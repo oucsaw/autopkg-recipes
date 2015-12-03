@@ -44,7 +44,7 @@
          (?P<version>[^)]+)
                              \)
      .*<.*href="
-        (?P<url>https://.*/(?P<filename>%NAME% (?P=version) %ARCH%.dmg))
+        (?P<url>https://.*/(?P<filename>Wireshark (?P=version) %ARCH%.dmg))
       ">OS X
 
 This should capture:
@@ -55,7 +55,7 @@ This should capture:
 We're using <![CDATA[ ... ]]> to avoid having to quote the angled brackets
 
 -->
-        <string><![CDATA[>\s*%RELEASE% Release\s*\((?P<version>[^)]+)\).*<.*href="(?P<url>https://.*/(?P<filename>%NAME% (?P=version) %ARCH%.dmg))">OS X]]></string>
+        <string><![CDATA[>\s*%RELEASE% Release\s*\((?P<version>[^)]+)\).*<.*href="(?P<url>https://.*/(?P<filename>Wireshark (?P=version) %ARCH%.dmg))">OS X]]></string>
         <key>re_flags</key>
         <array>
           <string>MULTILINE</string>
